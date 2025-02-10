@@ -1,0 +1,20 @@
+
+
+MAUI:
+
+
+
+
+
+
+Models
+	
+	Jugador
+		nombre get
+		eleccion (te saldra una foto u otra en funcion de lo que escoges) get set
+
+
+
+ViewModels:
+	
+
