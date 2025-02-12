@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35707.178 d17.12
+VisualStudioVersion = 17.12.35707.178
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UI", "UI\UI.csproj", "{9E5A133B-BA67-4FC2-B2C6-2EAD10197C01}"
 EndProject
@@ -9,6 +9,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Texto", "Texto", "{CE17A6BF
 	ProjectSection(SolutionItems) = preProject
 		Tekiste.txt = Tekiste.txt
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameServer", "GameServer\GameServer.csproj", "{73C8E337-54AE-4BB6-BAD3-761573941C6F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Models", "Models\Models.csproj", "{A061E31E-37B4-4244-9106-8CD0905726B9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -22,6 +26,14 @@ Global
 		{9E5A133B-BA67-4FC2-B2C6-2EAD10197C01}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9E5A133B-BA67-4FC2-B2C6-2EAD10197C01}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9E5A133B-BA67-4FC2-B2C6-2EAD10197C01}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{73C8E337-54AE-4BB6-BAD3-761573941C6F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{73C8E337-54AE-4BB6-BAD3-761573941C6F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{73C8E337-54AE-4BB6-BAD3-761573941C6F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{73C8E337-54AE-4BB6-BAD3-761573941C6F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A061E31E-37B4-4244-9106-8CD0905726B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A061E31E-37B4-4244-9106-8CD0905726B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A061E31E-37B4-4244-9106-8CD0905726B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A061E31E-37B4-4244-9106-8CD0905726B9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

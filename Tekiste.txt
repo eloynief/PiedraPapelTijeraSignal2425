@@ -11,10 +11,45 @@ Models
 	
 	Jugador
 		nombre get
-		eleccion (te saldra una foto u otra en funcion de lo que escoges) get set
+		eleccion
+
+	Eleccion (seran piedra papel tijera)
+		nombre (te saldra una foto u otra en funcion de lo que escoges) get set
+
+
 
 
 
 ViewModels:
 	
+	GameViewModel:
+	
+
+
+
+
+
+Views (MAUI):
+	Inicio
+	CrearPartida
+	BuscarPartida
+	Partida
+
+
+
+
+
+Hubs:
+	GameHub //Tiene que tener hasta 2 jugadores
+		JoinGroup
+		LeaveGroup
+		CreateGroup
+		
+
+
+
+
+
+
+
 
