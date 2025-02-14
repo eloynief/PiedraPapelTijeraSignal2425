@@ -17,6 +17,39 @@ namespace UI.Models.ViewModels
 
         public static int Puntos {get; set;}
 
+        
+        public GameViewModel()
+        {
+            //OPCIONES DEL JUEGO (LISTADO DEL JUEGO)
+            Opciones = new List<Eleccion> {
+                new Eleccion("piedra"),
+                new Eleccion("papel"),
+                new Eleccion("tijera")
+                };
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -14,9 +14,8 @@ Models
 		eleccion
 
 	Eleccion (seran piedra papel tijera)
-		nombre (te saldra una foto u otra en funcion de lo que escoges) get set
-
-
+		nombre get set
+		Imagen (te saldra una foto u otra en funcion de lo que escoges) 
 
 
 
@@ -41,15 +40,24 @@ Views (MAUI):
 
 Hubs:
 	GameHub //Tiene que tener hasta 2 jugadores
+
+
+
+		static List<Jugador> 
+
 		JoinGroup
 		LeaveGroup
 		CreateGroup
 		
+		PlayGame
+
+		EsperarPersona //serviria para esperar a la persona.
+
+		InsertaJugador(jugador): //lo mete en el listado y comprueba si se puede jugar. Si es el jugador 1, hace el esperar hasta que venga el j2 (clients.caller (el que espera))
+
+		
 
 
-
-
-
-
+		 una vez seleccionada las dos opciones, se comparan y muestra quien gana (Aumenta puntos al que gana). (EJ) Si una es piedra y el otro tijera, se comparan los dos y gana la piedra
 
 
