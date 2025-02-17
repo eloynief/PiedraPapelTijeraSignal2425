@@ -5,6 +5,24 @@ namespace GameServer.Hubs
     //probar
     public class GameHub:Hub
     {
+
+        #region Atributos
+
+        //public hub
+
+        public static Dictionary<string, int> datos;
+
+
+
+
+        #endregion
+
+
+
+
+
+        #region Functions
+
         public async Task JoinGroup(string grupo)
         {
             await Groups.AddToGroupAsync(Context.ConnectionId, grupo);
@@ -18,6 +36,8 @@ namespace GameServer.Hubs
 
             await Clients.Group(grupo).SendAsync("Send", $"{Context.ConnectionId} se fue del grupo: {grupo}");
         }
+
+        #endregion
 
     }
 }
