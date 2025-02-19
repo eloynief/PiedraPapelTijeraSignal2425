@@ -2,20 +2,28 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="UI.Views.GamePage"
+             xmlns:miViewModel="clr-namespace:UI.Models.ViewModels"
              Title="GamePage">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
 
-        <ListView x:Name="FruitListView" ItemsSource="{Binding Fruits}">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <TextCell Text="{Binding FruitName}" />
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+    <ContentPage.BindingContext>
+        <miViewModel:GameViewModel></miViewModel:GameViewModel>
+    </ContentPage.BindingContext>
+    
+
+    <VerticalStackLayout Padding="20" Spacing="10">
+
+        <!-- Mostrar la elección del jugador -->
+        <Label Text="Elige tu opción:" FontSize="16" />
+        <HorizontalStackLayout>
+            <Button Text="🪨 Piedra"/>
+            <Button Text="📄 Papel"/>
+            <Button Text="✂️ Tijeras"/>
+        </HorizontalStackLayout>
+
+        <!-- Mostrar resultado -->
+        <Label x:Name="lblResultado" Text="Resultado aparecerá aquí" FontSize="20" FontAttributes="Bold"/>
 
     </VerticalStackLayout>
+
+
 </ContentPage>
