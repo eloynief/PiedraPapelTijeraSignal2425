@@ -3,27 +3,58 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="UI.Views.GamePage"
              xmlns:miViewModel="clr-namespace:UI.Models.ViewModels"
-             Title="GamePage">
+             Title="Fuego Pito Palo"
+             >
 
     <ContentPage.BindingContext>
         <miViewModel:GameViewModel></miViewModel:GameViewModel>
     </ContentPage.BindingContext>
-    
 
-    <VerticalStackLayout Padding="20" Spacing="10">
 
-        <!-- Mostrar la elección del jugador -->
-        <Label Text="Elige tu opción:" FontSize="16" />
-        <HorizontalStackLayout>
-            <Button Text="🪨 Piedra"/>
-            <Button Text="📄 Papel"/>
-            <Button Text="✂️ Tijeras"/>
-        </HorizontalStackLayout>
 
-        <!-- Mostrar resultado -->
-        <Label x:Name="lblResultado" Text="Resultado aparecerá aquí" FontSize="20" FontAttributes="Bold"/>
 
-    </VerticalStackLayout>
+    <Grid Padding="30" Background="#40FF90">
+        <VerticalStackLayout Spacing="20" HorizontalOptions="Center" VerticalOptions="Center">
+
+            <!-- Título -->
+            <Label Text="Piedra, Papel o Tijeras" FontSize="30" TextColor="White" FontAttributes="Bold" HorizontalOptions="Center"/>
+
+            <!-- Selección de opciones -->
+            <Label Text="Elige tu opción:" FontSize="20" TextColor="White" FontAttributes="Bold" HorizontalOptions="Center"/>
+
+            <HorizontalStackLayout Spacing="20" HorizontalOptions="Center">
+                <Button Text="🪨 Piedra"
+                        HeightRequest="150" WidthRequest="150"
+                        BackgroundColor="White" TextColor="Black"
+                        CornerRadius="20"
+                        Padding="10" FontSize="24"/>
+
+                <Button Text="📄 Papel"
+                        HeightRequest="150" WidthRequest="150"
+                        BackgroundColor="White" TextColor="Black"
+                        CornerRadius="20"
+                        Padding="10" FontSize="24"/>
+
+                <Button Text="✂️ Tijeras"
+                        HeightRequest="150" WidthRequest="150"
+                        BackgroundColor="White" TextColor="Black"
+                        CornerRadius="20"
+                        Padding="10" FontSize="24"/>
+            </HorizontalStackLayout>
+
+            <!-- Mostrar resultado -->
+            <Label x:Name="lblResultado" 
+                   Text="Resultado aparecerá aquí" 
+                   FontSize="24" 
+                   TextColor="White" 
+                   FontAttributes="Bold" 
+                   HorizontalOptions="Center"/>
+
+        </VerticalStackLayout>
+    </Grid>
+
+
+
 
 
 </ContentPage>
