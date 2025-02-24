@@ -22,6 +22,29 @@
             <!-- Selección de opciones -->
             <Label Text="Elige tu opción:" FontSize="20" TextColor="White" FontAttributes="Bold" HorizontalOptions="Center"/>
 
+
+            <ListView x:Name="ListaOpciones" ItemsSource="{Binding Opciones}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            
+                            <Button ImageSource="{Binding Imagen}"
+                                HeightRequest="150" WidthRequest="150"
+                                BackgroundColor="#00000000"
+                                CornerRadius="10"
+                                Padding="10" FontSize="24"   
+                                Margin="10"
+                            />
+
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+                
+
+            </ListView>
+            
+            
+            <!--
             <HorizontalStackLayout Spacing="20" HorizontalOptions="Center">
                 <Button Text="🪨 Piedra"
                         HeightRequest="150" WidthRequest="150"
@@ -41,7 +64,9 @@
                         CornerRadius="20"
                         Padding="10" FontSize="24"/>
             </HorizontalStackLayout>
-
+            -->
+            
+            
             <!-- Mostrar resultado -->
             <Label x:Name="lblResultado" 
                    Text="Resultado aparecerá aquí" 

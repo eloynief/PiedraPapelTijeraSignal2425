@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.SignalR;
+using Models;
 
 namespace GameServer.Hubs
 {
@@ -12,6 +13,8 @@ namespace GameServer.Hubs
 
         public static Dictionary<string, int> datos;
 
+
+        private static List<Jugador> jugadores = new List<Jugador>();
 
 
 
