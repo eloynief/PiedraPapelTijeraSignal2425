@@ -18,13 +18,25 @@ namespace UI.Models.ViewModels
         public static int Puntos {get; set;}
 
 
-        //Jugadores ??
+        //Jugadores ?? Cada uno tendra una eleccion
+        private Jugador j1;
+        private Jugador j2;
 
 
 
 
 
+        /////para testear/////
         
+
+
+
+
+
+
+        /// <summary>
+        /// constructor
+        /// </summary>
         public GameViewModel()
         {
             //OPCIONES DEL JUEGO (LISTADO DEL JUEGO)
@@ -36,13 +48,38 @@ namespace UI.Models.ViewModels
         }
 
 
+        /// <summary>
+        /// funcion para comprobar quien ha ganado la eleccion
+        /// </summary>
+        public void compobacionJuego()
+        {
+
+            if(
+                j1.eleccion.Nombre=="piedra"&&j2.eleccion.Nombre== "papel" ||
+                j1.eleccion.Nombre == "papel" && j2.eleccion.Nombre == "tijeras" ||
+                j1.eleccion.Nombre == "tijeras" && j2.eleccion.Nombre == "piedra"
+            )
+            {
+                //gana j2
+            }
+            else if (
+                j2.eleccion.Nombre == "piedra" && j1.eleccion.Nombre == "papel" ||
+                j2.eleccion.Nombre == "papel" && j1.eleccion.Nombre == "tijeras" ||
+                j2.eleccion.Nombre == "tijeras" && j1.eleccion.Nombre == "piedra"
+                )
+            {
+                //gana j1
+            }
+            else if(j1.eleccion.Nombre==j2.eleccion.Nombre)
+            {
+                //empate
+            }
 
 
 
 
 
-
-
+        }
 
 
 
