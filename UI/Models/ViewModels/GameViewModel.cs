@@ -1,4 +1,5 @@
-﻿using Models;
+﻿using Microsoft.AspNetCore.SignalR.Client;
+using Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,11 @@ namespace UI.Models.ViewModels
 {
     public class GameViewModel
     {
+        private HubConnection connection;
+        private string enlace= "https://localhost:3000/salajuego";
+        private string groupName = "Partida1";
+
+
 
         //public static int NumeroJugadores { get; private set; }
 
@@ -39,6 +45,14 @@ namespace UI.Models.ViewModels
         /// </summary>
         public GameViewModel()
         {
+
+            //conexion
+            connection = new HubConnectionBuilder()
+            .WithUrl(enlace)
+            .Build();
+
+
+
             //OPCIONES DEL JUEGO (LISTADO DEL JUEGO)
             Opciones = new List<Eleccion> {
                 new Eleccion("piedra"),
