@@ -2,16 +2,18 @@
 using Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace UI.Models.ViewModels
 {
     public class GameViewModel
     {
         private HubConnection connection;
-        private string enlace= "https://localhost:3000/salajuego";
+        private string enlace= "http://localhost:5062/salajuego";
         private string groupName = "Partida1";
 
 
@@ -31,9 +33,25 @@ namespace UI.Models.ViewModels
 
 
 
+        private string nombre;
+        private string grupo;
+
+        public string Nombre
+        {
+            get => nombre;
+            set { nombre = value; OnPropertyChanged(nameof(Nombre)); }
+        }
+
+        public string Grupo
+        {
+            get => grupo;
+            set { grupo = value; OnPropertyChanged(nameof(Grupo)); }
+        }
+
+        public ICommand UnirseCommand { get; }
 
         /////para testear/////
-        
+
 
 
 
@@ -51,7 +69,7 @@ namespace UI.Models.ViewModels
             .WithUrl(enlace)
             .Build();
 
-
+            UnirseCommand = new Command(async () => await UnirseAlJuego());
 
             //OPCIONES DEL JUEGO (LISTADO DEL JUEGO)
             Opciones = new List<Eleccion> {
@@ -101,6 +119,24 @@ namespace UI.Models.ViewModels
 
 
 
+            
+
+            private async Task UnirseAlJuego()
+            {
+                if (string.IsNullOrWhiteSpace(Nombre) || string.IsNullOrWhiteSpace(Grupo))
+                {
+                    //await Application.Current.MainPage.DisplayAlert("Error", "Debes ingresar un nombre y un grupo", "OK");
+                    //return;
+                }
+
+                await connection.StartAsync();
+                await connection.InvokeAsync("JoinGroup", Grupo);
+            }
+
+            public event PropertyChangedEventHandler PropertyChanged;
+            protected void OnPropertyChanged(string propertyName) =>
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        
 
 
 

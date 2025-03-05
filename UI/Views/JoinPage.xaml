@@ -2,32 +2,43 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="UI.Views.JoinPage"
+             xmlns:viewModel="clr-namespace:UI.Models.ViewModels"
              Title="JoinPage">
+
+    <ContentPage.BindingContext>
+        <viewModel:GameViewModel></viewModel:GameViewModel>
+    </ContentPage.BindingContext>
+    
     <VerticalStackLayout>
         <Label 
             Text="Welcome to .NET MAUI!"
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
 
+        <VerticalStackLayout Padding="30" Spacing="20">
+
+            <Label Text="Bienvenido al Juego" FontSize="24" FontAttributes="Bold" HorizontalOptions="Center"/>
+
+            <Entry x:Name="txtNombre" 
+               Placeholder="Ingresa tu nombre"
+               Text="{Binding Nombre, Mode=TwoWay}"
+               FontSize="18"
+               BackgroundColor="White"/>
+
+            <Entry x:Name="txtGrupo" 
+               Placeholder="Ingresa el grupo"
+               Text="{Binding Grupo, Mode=TwoWay}"
+               FontSize="18"
+               BackgroundColor="White"/>
+
+            <Button Text="Unirse al Juego"
+                FontSize="20"
+                BackgroundColor="Green"
+                TextColor="White"
+                Command="{Binding UnirseCommand}"/>
+
+        </VerticalStackLayout>
 
 
-        <Label Text="">
-            
-        </Label>
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
     </VerticalStackLayout>
 </ContentPage>

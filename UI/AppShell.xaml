@@ -3,7 +3,7 @@
     x:Class="UI.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:UI"
+    xmlns:local="clr-namespace:UI.Views"
     Shell.FlyoutBehavior="Disabled"
     Title="UI">
 
@@ -13,11 +13,17 @@
     ContentTemplate="{DataTemplate local:MainPage}"
     Route="MainPage" />
     -->
-    
-    
+
+
     <ShellContent
         Title="Juego"
-        ContentTemplate="{DataTemplate local:Views.GamePage}"
+        ContentTemplate="{DataTemplate local:JoinPage}"
+        Route="GamePage" />
+    
+
+    <ShellContent
+        Title="Juego"
+        ContentTemplate="{DataTemplate local:GamePage}"
         Route="GamePage" />
 
 </Shell>
