@@ -69,6 +69,10 @@ namespace UI.Models.ViewModels
             .WithUrl(enlace)
             .Build();
 
+            
+
+
+
             UnirseCommand = new Command(async () => await UnirseAlJuego());
 
             //OPCIONES DEL JUEGO (LISTADO DEL JUEGO)
