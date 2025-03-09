@@ -2,13 +2,12 @@ using GameServer.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 
-
-
-// Agregar SignalR al contenedor de servicios
-builder.Services.AddSignalR();
-
 // Add services to the container.
 builder.Services.AddRazorPages();
+
+//signal r server
+builder.Services.AddSignalR();
+
 
 var app = builder.Build();
 
@@ -17,12 +16,6 @@ if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error");
 }
-else
-{
-    app.UseDeveloperExceptionPage(); // Para obtener más detalles sobre el error.
-}
-
-
 app.UseStaticFiles();
 
 app.UseRouting();
@@ -30,10 +23,17 @@ app.UseRouting();
 app.UseAuthorization();
 
 
-
-app.MapHub<GameHub>("/salajuego");
-
 app.MapRazorPages();
+
+/**
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapHub<GameHub>("/gameHub"); // Ruta de tu Hub
+});
+*/
+//app.MapHub<GameHub>("/salajuego");
+
+app.MapHub<GameHub>("/gamehub");
 
 
 

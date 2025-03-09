@@ -12,6 +12,13 @@
         public Eleccion eleccion { get; set; }
 
         //el constructor no tiene eleccion
+
+        public Jugador()
+        {
+
+        }
+
+
         public Jugador(int id, string nombre)
         {
             this.id = id;

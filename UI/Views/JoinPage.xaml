@@ -23,13 +23,13 @@
                Placeholder="Ingresa tu nombre"
                Text="{Binding Nombre, Mode=TwoWay}"
                FontSize="18"
-               BackgroundColor="White"/>
+               BackgroundColor="red"/>
 
             <Entry x:Name="txtGrupo" 
                Placeholder="Ingresa el grupo"
                Text="{Binding Grupo, Mode=TwoWay}"
                FontSize="18"
-               BackgroundColor="White"/>
+               BackgroundColor="red"/>
 
             <Button Text="Unirse al Juego"
                 FontSize="20"
@@ -38,6 +38,12 @@
                 Command="{Binding UnirseCommand}"/>
 
         </VerticalStackLayout>
+
+
+        <ActivityIndicator IsRunning="{Binding IsWaiting}" 
+                   IsVisible="{Binding IsWaiting}" 
+                   Color="Blue"/>
+
 
 
     </VerticalStackLayout>
