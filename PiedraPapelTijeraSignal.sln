@@ -7,8 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UI", "UI\UI.csproj", "{9E5A
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Texto", "Texto", "{CE17A6BF-1FD9-4A40-9176-E6F88FACEFC6}"
 	ProjectSection(SolutionItems) = preProject
-		Tekiste.txt = Tekiste.txt
 		zzzzzzz.txt = zzzzzzz.txt
+		Texto.txt = Texto.txt
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameServer", "GameServer\GameServer.csproj", "{73C8E337-54AE-4BB6-BAD3-761573941C6F}"

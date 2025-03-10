@@ -48,7 +48,13 @@ namespace GameServer.Hubs
             }
         }
 
-
+        /// <summary>
+        /// Pre: nombre del grupo
+        /// Post: espera el resultado de sacar el usuario del grupo
+        /// funcion para irse del grupo
+        /// </summary>
+        /// <param name="grupoNombre"></param>
+        /// <returns></returns>
         public async Task LeaveGroup(string grupoNombre)
         {
             //busco el grupo en la lista
@@ -81,9 +87,6 @@ namespace GameServer.Hubs
             //eliminar al usuario del grupo de SignalR
             await Groups.RemoveFromGroupAsync(Context.ConnectionId, grupoNombre);
         }
-
-
-
 
         /// <summary>
         /// Pre: quiero obtener el resultado de la eleccion

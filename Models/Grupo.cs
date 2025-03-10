@@ -37,11 +37,13 @@ namespace Models
 
         public Grupo()
         {
+            jugadores=new List<Jugador>();
             nombre = "";
         }
 
         public Grupo(string nombre)
         {
+            jugadores = new List<Jugador>();
             this.Nombre = nombre;
         }
 
