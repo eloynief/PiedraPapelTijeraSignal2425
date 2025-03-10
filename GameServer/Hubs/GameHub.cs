@@ -20,41 +20,32 @@ namespace GameServer.Hubs
         /// <returns></returns>
         public async Task JoinGroup(string grupoNombre, string jugadorNombre)
         {
-            //variable para el grupo en el que queremos unirnos
-            Grupo grupo= grupos.FirstOrDefault(g=>g.Nombre== grupoNombre);
+            Grupo grupo = grupos.FirstOrDefault(g => g.Nombre == grupoNombre);
 
-            //comprobamos que el grupo no exista
             if (grupo == null)
             {
-                //creamos el grupo y agregamos el primer jugador
                 grupo = new Grupo(grupoNombre);
                 Jugador jugador = new Jugador(jugadorNombre, grupoNombre, 0, 0);
                 grupo.Jugadores = new List<Jugador> { jugador };
                 grupos.Add(grupo);
 
-                //lo ponemos en el grupo
                 await Groups.AddToGroupAsync(Context.ConnectionId, grupoNombre);
-
-                //ponemos los jugadores dentro del grupo
-                await Clients.Group(grupoNombre).SendAsync("PlayerJoined", jugadorNombre);
+                await Clients.Group(grupoNombre).SendAsync("PlayerJoined", jugador); // Enviar Jugador
             }
             else
             {
-                // Si el grupo ya tiene 2 jugadores, no se puede unir nadie más
                 if (grupo.Jugadores.Count >= 2)
                 {
                     await Clients.Caller.SendAsync("GroupFull", "El grupo ya está completo.");
                     return;
                 }
 
-                // Agregar el segundo jugador
                 Jugador jugador = new Jugador(jugadorNombre, grupoNombre, 0, 0);
                 grupo.Jugadores.Add(jugador);
 
                 await Groups.AddToGroupAsync(Context.ConnectionId, grupoNombre);
-                await Clients.Group(grupoNombre).SendAsync("PlayerJoined", jugadorNombre);
+                await Clients.Group(grupoNombre).SendAsync("PlayerJoined", jugador); // Enviar Jugador
             }
-
         }
 
 
@@ -169,7 +160,6 @@ namespace GameServer.Hubs
             }
         }
 
-
         #region funciones (Para usar aqui)
 
         /// <summary>
@@ -211,64 +201,6 @@ namespace GameServer.Hubs
             }
         }
         #endregion
-
-
-        /**
-        #region Atributos
-
-        //public hub
-
-        public static Dictionary<string, int> datos;
-
-        //lista de jugadores
-        private static List<Jugador> jugadores = new List<Jugador>();
-        #endregion
-
-        //este metodo se invoca siempre que se conecta un cliente
-        public override async Task OnConnectedAsync()
-        {
-
-            //envia quien se unio
-            await Clients.All.SendAsync("ReceiveMessage", $"{Context.ConnectionId} c unio");
-
-            await Groups.AddToGroupAsync(Context.ConnectionId, "New Connections");
-
-            await Groups.AddToGroupAsync(Context.ConnectionId, "Special Group");
-
-            //await Clients.Group("...").SendAsync;
-
-            await base.OnConnectedAsync();
-        }
-
-        public async Task SendMessage(string message)
-        {
-            await Clients.All.SendAsync("RecieveMessage", $"{Context.ConnectionId}:{message}");
-
-        }
-
-
-
-        #region Functions
-
-        public async Task JoinGroup(string grupo)
-        {
-            await Groups.AddToGroupAsync(Context.ConnectionId, grupo);
-
-            await Clients.Group(grupo).SendAsync("Send", $"{Context.ConnectionId} se ha unido al grupo: {grupo}");
-        }
-
-        public async Task LeaveGroup(string grupo)
-        {
-            await Groups.RemoveFromGroupAsync(Context.ConnectionId, grupo);
-
-            await Clients.Group(grupo).SendAsync("Send", $"{Context.ConnectionId} se fue del grupo: {grupo}");
-        }
-
-        #endregion
-
-        */
-
-
 
     }
 }

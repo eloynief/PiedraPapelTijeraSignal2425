@@ -21,7 +21,7 @@
 
             <!-- Selección de opciones -->
             <Label Text="Elige tu opción:" FontSize="20" TextColor="White" FontAttributes="Bold" HorizontalOptions="Center"/>
-
+            
 
             <ListView x:Name="ListaOpciones" ItemsSource="{Binding Opciones}">
                 <ListView.ItemTemplate>
