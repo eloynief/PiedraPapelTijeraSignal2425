@@ -20,7 +20,7 @@ namespace GameServer.Hubs
         /// <returns></returns>
         public async Task JoinGroup(string grupoNombre, string jugadorNombre)
         {
-            Grupo grupo = grupos.FirstOrDefault(g => g.Nombre == grupoNombre);
+            Grupo grupo = obtenerGrupo(grupoNombre);
 
             if (grupo == null)
             {
