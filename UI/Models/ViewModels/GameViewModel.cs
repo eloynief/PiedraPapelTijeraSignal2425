@@ -20,7 +20,7 @@ namespace UI.Models.ViewModels
 
         // Jugadores
         private Jugador yo = new Jugador();
-        //este lo cojo para mostrar el nombre
+        //este lo cojo para mostrar el nombre/puntos
         private Jugador rival = new Jugador();
 
         private string nombre;
@@ -33,6 +33,48 @@ namespace UI.Models.ViewModels
         #endregion
 
         #region Propiedades
+
+        public Jugador Yo
+        {
+            get { return yo; }
+            set { 
+                yo = value;
+                //desde aqui notifico la puntuacion
+                OnPropertyChanged(nameof(Yo));
+            }
+        }
+
+        public Jugador Rival
+        {
+            get { return rival; }
+            set
+            {
+                rival = value;
+                //notifico la puntuacion
+                OnPropertyChanged(nameof(Rival));
+            }
+        }
+
+        public string Nombre
+        {
+            get { return nombre; }
+            set
+            {
+                nombre = value;
+                //OnPropertyChanged(Nombre);
+            }
+        }
+
+        public string Grupo
+        {
+
+            get { return grupo; }
+            set {
+                grupo = value;
+                //OnPropertyChanged(Grupo);
+            }
+        }
+
         public List<Eleccion> Opciones
         {
             get
@@ -45,18 +87,6 @@ namespace UI.Models.ViewModels
                 };
             } 
         } 
-
-        public string Nombre
-        {
-            get => nombre;
-            set { nombre = value; OnPropertyChanged(nameof(Nombre)); }
-        }
-
-        public string Grupo
-        {
-            get => grupo;
-            set { grupo = value; OnPropertyChanged(nameof(Grupo)); }
-        }
 
         public string Resultado
         {
