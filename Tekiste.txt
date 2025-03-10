@@ -10,19 +10,43 @@ MAUI:
 Models
 	
 	Jugador
-		nombre get
-		eleccion
+		-nombre
+		-eleccion
+		-puntos
+		-victorias
+		-eleccion
+
+		+Nombre {get; set;}
+		+Eleccion {get; set;}
+		+Puntos {get; set;}
+		+Victorias {get; set;}
+		+Eleccion {get; set;}
+		
+		+Jugador()
+
 
 	Eleccion (seran piedra papel tijera)
-		nombre get set
-		Imagen (te saldra una foto u otra en funcion de lo que escoges) 
+		-nombre
 
+		+Nombre {get; set;}
+
+		+Imagen (te saldra una foto u otra en funcion de lo que escoges) 
+
+
+	Grupo
+		
+        -List<Jugador> jugadores
+
+        -string nombre
 
 
 ViewModels:
 	
-	GameViewModel:
-	
+	GameViewModel//vm del juego
+
+	EsperaVM //Espera del otro jugd
+
+	VictoriaVM //para el ganador
 
 
 

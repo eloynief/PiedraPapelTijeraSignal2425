@@ -11,15 +11,28 @@ namespace UI.Models.ViewModels
 {
     public class GameViewModel : INotifyPropertyChanged
     {
-        private HubConnection _connection;
-        private const string _enlace = "http://localhost:5062/gamehub"; // URL del Hub
-        private string _groupName = "Partida1"; // Grupo por defecto
+        #region atributos
+
+        private HubConnection connection;
+
+        // URL del Hub
+        private const string enlace = "http://localhost:5062/gamehub";
 
         // Jugadores
-        private Jugador _j1 = new Jugador();
-        private Jugador _j2 = new Jugador();
+        private Jugador yo = new Jugador();
+        //este lo cojo para mostrar el nombre
+        private Jugador rival = new Jugador();
 
-        // Propiedades públicas
+        private string nombre;
+
+        private string grupo;
+
+        private string resultado;
+
+        private bool estaEsperando;
+        #endregion
+
+        #region Propiedades
         public List<Eleccion> Opciones { get; } = new List<Eleccion>
         {
             new Eleccion("piedra"),
@@ -27,33 +40,32 @@ namespace UI.Models.ViewModels
             new Eleccion("tijeras")
         };
 
-        private string _nombre;
         public string Nombre
         {
-            get => _nombre;
-            set { _nombre = value; OnPropertyChanged(nameof(Nombre)); }
+            get => nombre;
+            set { nombre = value; OnPropertyChanged(nameof(Nombre)); }
         }
 
-        private string _grupo;
         public string Grupo
         {
-            get => _grupo;
-            set { _grupo = value; OnPropertyChanged(nameof(Grupo)); }
+            get => grupo;
+            set { grupo = value; OnPropertyChanged(nameof(Grupo)); }
         }
 
-        private string _resultado;
         public string Resultado
         {
-            get => _resultado;
-            set { _resultado = value; OnPropertyChanged(nameof(Resultado)); }
+            get => resultado;
+            set { resultado = value; OnPropertyChanged(nameof(Resultado)); }
         }
 
-        private bool _isWaiting;
-        public bool IsWaiting
+        public bool EstaEsperando
         {
-            get => _isWaiting;
-            set { _isWaiting = value; OnPropertyChanged(nameof(IsWaiting)); }
+            get => estaEsperando;
+            set { estaEsperando = value; OnPropertyChanged(nameof(EstaEsperando)); }
         }
+
+        #endregion
+
 
         // Comandos
         public ICommand UnirseCommand { get; set; }
@@ -61,6 +73,9 @@ namespace UI.Models.ViewModels
 
         public GameViewModel()
         {
+            //obtenemos la conexion con el servidor
+            connection=new HubConnectionBuilder().WithUrl(enlace).Build();
+
             UnirseCommand = new Command(async () => await UnirseAlJuego());
             ElegirOpcionCommand = new Command<string>(async (opcion) => await ElegirOpcion(opcion));
             SignalR();
@@ -69,17 +84,17 @@ namespace UI.Models.ViewModels
         // Inicialización de SignalR
         private async void SignalR()
         {
-            _connection = new HubConnectionBuilder()
-                .WithUrl(_enlace)
+            connection = new HubConnectionBuilder()
+                .WithUrl(enlace)
                 .Build();
 
             // Métodos que el servidor puede invocar
-            _connection.On<string, string>("ReceiveChoice", (jugadorId, eleccion) => RecibirEleccion(jugadorId, eleccion));
-            _connection.On<string>("ReceiveResult", (resultado) => MostrarResultado(resultado));
+            connection.On<string, string>("ReceiveChoice", (jugadorId, eleccion) => RecibirEleccion(jugadorId, eleccion));
+            connection.On<string>("ReceiveResult", (resultado) => MostrarResultado(resultado));
 
             try
             {
-                await _connection.StartAsync();
+                await connection.StartAsync();
             }
             catch (Exception ex)
             {
@@ -96,20 +111,20 @@ namespace UI.Models.ViewModels
                 return;
             }
 
-            if (_connection.State != HubConnectionState.Connected)
+            if (connection.State != HubConnectionState.Connected)
             {
-                await _connection.StartAsync();
+                await connection.StartAsync();
             }
             
             //llamariamos al metodo del gamehub
-            await _connection.InvokeAsync("JoinGroup", Grupo, Nombre);
+            await connection.InvokeAsync("JoinGroup", Grupo, Nombre);
             Resultado = $"Te has unido al grupo {Grupo}";
         }
 
         // Elegir una opción
         private async Task ElegirOpcion(string opcion)
         {
-            if (_connection.State != HubConnectionState.Connected)
+            if (connection.State != HubConnectionState.Connected)
             {
                 Resultado = "No estás conectado al servidor";
                 return;
@@ -117,20 +132,20 @@ namespace UI.Models.ViewModels
 
             // Asignar la elección al jugador local (J1 o J2 según el contexto)
             var eleccion = Opciones.FirstOrDefault(o => o.Nombre == opcion);
-            if (string.IsNullOrEmpty(_j1.Nombre)) // Si J1 no tiene nombre, este cliente es J1
+            if (string.IsNullOrEmpty(yo.Nombre)) // Si J1 no tiene nombre, este cliente es J1
             {
-                _j1.Nombre = Nombre;
-                _j1.eleccion = eleccion;
+                yo.Nombre = Nombre;
+                yo.JugadorEleccion = eleccion;
             }
-            else if (string.IsNullOrEmpty(_j2.Nombre)) // Si J2 no tiene nombre, este cliente es J2
+            else if (string.IsNullOrEmpty(rival.Nombre)) // Si J2 no tiene nombre, este cliente es J2
             {
-                _j2.Nombre = Nombre;
-                _j2.eleccion = eleccion;
+                rival.Nombre = Nombre;
+                rival.JugadorEleccion = eleccion;
             }
 
             // Enviar la elección al servidor
-            await _connection.InvokeAsync("SendChoice", Grupo, Nombre, opcion);
-            IsWaiting = true; // Indicamos que estamos esperando al otro jugador
+            await connection.InvokeAsync("SendChoice", Grupo, Nombre, opcion);
+            EstaEsperando = true; // Indicamos que estamos esperando al otro jugador
             Resultado = "Esperando al otro jugador...";
         }
 
@@ -140,15 +155,15 @@ namespace UI.Models.ViewModels
             var opcion = Opciones.FirstOrDefault(o => o.Nombre == eleccion);
             if (jugadorId != Nombre) // Si no es mi elección
             {
-                if (_j1.Nombre == Nombre) // Soy J1, entonces esto es de J2
+                if (yo.Nombre == Nombre) // Soy J1, entonces esto es de J2
                 {
-                    _j2.Nombre = jugadorId;
-                    _j2.eleccion = opcion;
+                    rival.Nombre = jugadorId;
+                    rival.JugadorEleccion = opcion;
                 }
                 else // Soy J2, entonces esto es de J1
                 {
-                    _j1.Nombre = jugadorId;
-                    _j1.eleccion = opcion;
+                    yo.Nombre = jugadorId;
+                    yo.JugadorEleccion = opcion;
                 }
             }
         }
@@ -157,32 +172,35 @@ namespace UI.Models.ViewModels
         private void MostrarResultado(string resultado)
         {
             Resultado = resultado;
-            IsWaiting = false;
+            EstaEsperando = false;
             // Reiniciar elecciones para la próxima ronda
-            _j1.eleccion = null;
-            _j2.eleccion = null;
+            yo.JugadorEleccion = null;
+            rival.JugadorEleccion = null;
         }
 
         // Lógica del juego (puede moverse al servidor si prefieres)
         private string ComprobacionJuego()
         {
-            if (_j1.eleccion == null || _j2.eleccion == null)
+            if (yo.JugadorEleccion == null || rival.JugadorEleccion == null)
                 return "Faltan elecciones";
 
-            if (_j1.eleccion.Nombre == _j2.eleccion.Nombre)
+            if (yo.JugadorEleccion.Nombre == rival.JugadorEleccion.Nombre)
                 return "Empate";
 
-            if ((_j1.eleccion.Nombre == "piedra" && _j2.eleccion.Nombre == "tijeras") ||
-                (_j1.eleccion.Nombre == "papel" && _j2.eleccion.Nombre == "piedra") ||
-                (_j1.eleccion.Nombre == "tijeras" && _j2.eleccion.Nombre == "papel"))
+            if ((yo.JugadorEleccion.Nombre == "piedra" && rival.JugadorEleccion.Nombre == "tijeras") ||
+                (yo.JugadorEleccion.Nombre == "papel" && rival.JugadorEleccion.Nombre == "piedra") ||
+                (yo.JugadorEleccion.Nombre == "tijeras" && rival.JugadorEleccion.Nombre == "papel"))
             {
-                return $"{_j1.Nombre} gana";
+                return $"{yo.Nombre} gana";
             }
-            return $"{_j2.Nombre} gana";
+            return $"{rival.Nombre} gana";
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged(string propertyName) =>
+        protected void OnPropertyChanged(string propertyName)
+        {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+            
     }
 }

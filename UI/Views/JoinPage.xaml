@@ -6,7 +6,7 @@
              Title="JoinPage">
 
     <ContentPage.BindingContext>
-        <viewModel:GameViewModel></viewModel:GameViewModel>
+        <viewModel:SalaEsperaVM></viewModel:SalaEsperaVM>
     </ContentPage.BindingContext>
     
     <VerticalStackLayout>
@@ -23,13 +23,13 @@
                Placeholder="Ingresa tu nombre"
                Text="{Binding Nombre, Mode=TwoWay}"
                FontSize="18"
-               BackgroundColor="red"/>
+               TextColor="red"/>
 
             <Entry x:Name="txtGrupo" 
                Placeholder="Ingresa el grupo"
                Text="{Binding Grupo, Mode=TwoWay}"
                FontSize="18"
-               BackgroundColor="red"/>
+               TextColor="red"/>
 
             <Button Text="Unirse al Juego"
                 FontSize="20"
@@ -39,11 +39,18 @@
 
         </VerticalStackLayout>
 
+            <Label
+                IsVisible="{Binding BotonJoinPulsado}"
+                Text="Esperando..."
+                TextColor="Blue"
+                FontSize="36"/>
 
+        
+        <!--
         <ActivityIndicator IsRunning="{Binding IsWaiting}" 
                    IsVisible="{Binding IsWaiting}" 
                    Color="Blue"/>
-
+        -->
 
 
     </VerticalStackLayout>

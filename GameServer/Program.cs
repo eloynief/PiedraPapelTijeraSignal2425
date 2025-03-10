@@ -8,7 +8,6 @@ builder.Services.AddRazorPages();
 //signal r server
 builder.Services.AddSignalR();
 
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -22,23 +21,8 @@ app.UseRouting();
 
 app.UseAuthorization();
 
-
 app.MapRazorPages();
 
-/**
-app.UseEndpoints(endpoints =>
-{
-    endpoints.MapHub<GameHub>("/gameHub"); // Ruta de tu Hub
-});
-*/
-//app.MapHub<GameHub>("/salajuego");
-
 app.MapHub<GameHub>("/gamehub");
-
-
-
-
-
-
 
 app.Run();

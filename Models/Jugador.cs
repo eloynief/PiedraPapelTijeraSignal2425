@@ -2,27 +2,76 @@
 {
     public class Jugador
     {
-        //
-        private int id;
+
         private string nombre;
 
-        public int Id { get; }
-        public string Nombre { get; set; }
+        private string grupo;
 
-        public Eleccion eleccion { get; set; }
+        private int puntos;
 
-        //el constructor no tiene eleccion
+        private int victorias;
 
-        public Jugador()
+        private Eleccion eleccion;
+
+
+        public string Nombre { 
+            get{ return nombre; } 
+            set{ nombre = value; }
+        }
+
+        public string Grupo
         {
+            get { return grupo; }
+
+            set { grupo = value; }
 
         }
 
-
-        public Jugador(int id, string nombre)
+        public int Puntos
         {
-            this.id = id;
+            get { return puntos; }
+            set { puntos = value; }
+        }
+
+        public int Victorias
+        {
+            get { return victorias; }
+            set { victorias = value; }
+        }
+
+        //herencia de la eleccion (tiene imagen y nombre)
+        public Eleccion JugadorEleccion {
+            get { return eleccion; }
+            set { eleccion = value; }
+        }
+
+
+
+        /// <summary>
+        /// constructor sin params
+        /// </summary>
+        public Jugador()
+        {
+            this.nombre = "";
+            this.grupo = "";
+            this.puntos = 0;
+            this.victorias = 0;
+            this.eleccion=new Eleccion("");
+        }
+
+        /// <summary>
+        /// constructor con params
+        /// </summary>
+        /// <param name="nombre"></param>
+        /// <param name="grupo"></param>
+        /// <param name="puntos"></param>
+        public Jugador(string nombre,string grupo, int puntos,int victorias)
+        {
             this.nombre = nombre;
+            this.grupo = grupo;
+            this.puntos = puntos;
+            this.victorias = victorias;
+            this.eleccion = new Eleccion("");
         }
 
     }

@@ -1,0 +1,57 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test SignalR</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/7.0.5/signalr.min.js"></script>
+</head>
+<body>
+    <h1>Prueba de SignalR</h1>
+    <button onclick="connect()">Conectar</button>
+    <button onclick="joinGroup()">Unirse a Grupo</button>
+    <button onclick="sendChoice()">Enviar Elección</button>
+    <p id="status">Estado: Desconectado</p>
+
+    <script>
+        let connection = new signalR.HubConnectionBuilder()
+            .withUrl("http://localhost:5062/gamehub") // Cambia el puerto si es necesario
+            .configureLogging(signalR.LogLevel.Information)
+            .build();
+
+        async function connect() {
+            try {
+                await connection.start();
+                document.getElementById("status").innerText = "Estado: Conectado";
+                console.log("Conectado al hub.");
+            } catch (err) {
+                console.error(err);
+                document.getElementById("status").innerText = "Error al conectar.";
+            }
+        }
+
+        async function joinGroup() {
+            let group = "Grupo1";
+            let player = "Jugador" + Math.floor(Math.random() * 100);
+            await connection.invoke("JoinGroup", group, player);
+            console.log(`${player} se unió a ${group}`);
+        }
+
+        async function sendChoice() {
+            let group = "Grupo1";
+            let player = "Jugador1";
+            let choice = ["piedra", "papel", "tijeras"][Math.floor(Math.random() * 3)];
+            await connection.invoke("ChooseOption", group, player, choice);
+            console.log(`${player} eligió ${choice}`);
+        }
+
+        connection.on("PlayerJoined", (player) => {
+            console.log(`Nuevo jugador: ${player}`);
+        });
+
+        connection.on("RoundResult", (message) => {
+            console.log(`Resultado: ${message}`);
+        });
+    </script>
+</body>
+</html>
