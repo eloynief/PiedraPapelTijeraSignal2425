@@ -20,6 +20,10 @@ namespace UI.Models.ViewModels
         private bool botonJoinPulsado;
 
         private bool juegoListo;
+
+        //evento para cambiar a la pantalla de juego
+        public event Action onGameStart; 
+
         #endregion
 
         #region properties
@@ -34,7 +38,20 @@ namespace UI.Models.ViewModels
 
         public List<Jugador> Jugadores {
             get { return jugadores; }
-            set { jugadores = value; }
+            set
+            {
+                jugadores = value;
+                OnPropertyChanged(nameof(Jugadores));
+
+                // Si hay 2 jugadores, iniciar el juego
+                if (jugadores.Count == 2)
+                {
+                    onGameStart.Invoke();
+                    Shell.Current.GoToAsync("///GamePage");
+                }
+
+            }
+
         }
 
         public bool BotonJoinPulsado
@@ -66,20 +83,34 @@ namespace UI.Models.ViewModels
         /// </summary>
         public SalaEsperaVM()
         {
+            jugadores = new List<Jugador>();
+
+            connection = new HubConnectionBuilder().WithUrl(enlace).Build();
+
             //la funcion de unirse se pondra en el comando de boton
             UnirseCommand = new Command(async () => await UnirseAlJuego());
-
-            //llamo al metodo de signal
+            
+            // Configuramos las funciones de SignalR
             ComprobarUnion();
+            esperaConexion();
+
         }
 
         #endregion
 
         #region metodos con signalR
 
+
+        private async void Unirme()
+        {
+            //creo mi conexion
+
+
+
+        }
+
         private async void ComprobarUnion()
         {
-            connection = new HubConnectionBuilder().WithUrl(enlace).Build();
 
             connection.On<Jugador>("PlayerJoined", (jugador) =>
             {
@@ -96,13 +127,22 @@ namespace UI.Models.ViewModels
                 }
             });
 
-            await connection.StartAsync();
+
         }
+
+
 
         #endregion
 
+        #region funciones asincronas
 
-        #region funciones
+        /// <summary>
+        /// metodo para la conexion
+        /// </summary>
+        private async void esperaConexion()
+        {
+            await connection.StartAsync();
+        }
 
         /// <summary>
         /// Pre: nada
@@ -117,8 +157,15 @@ namespace UI.Models.ViewModels
             {
                 //llamamos la funcion de signal
                 await connection.InvokeAsync("JoinGroup", Grupo, Nombre);
+
+                jugadores.Add(new Jugador(nombre,grupo));
+                OnPropertyChanged(nameof(Jugadores));
+
                 BotonJoinPulsado = true;
             }
+
+
+
         }
 
         #endregion

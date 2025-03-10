@@ -16,9 +16,9 @@
 
 
     <ShellContent
-        Title="Juego"
+        Title="Inicio"
         ContentTemplate="{DataTemplate local:JoinPage}"
-        Route="GamePage" />
+        Route="JoinPage" />
     
 
     <ShellContent

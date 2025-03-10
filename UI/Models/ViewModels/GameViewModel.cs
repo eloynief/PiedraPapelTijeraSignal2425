@@ -33,12 +33,18 @@ namespace UI.Models.ViewModels
         #endregion
 
         #region Propiedades
-        public List<Eleccion> Opciones { get; } = new List<Eleccion>
+        public List<Eleccion> Opciones
         {
-            new Eleccion("piedra"),
-            new Eleccion("papel"),
-            new Eleccion("tijeras")
-        };
+            get
+            {
+                return new List<Eleccion>
+                {
+                    new Eleccion("piedra"),
+                    new Eleccion("papel"),
+                    new Eleccion("tijeras")
+                };
+            } 
+        } 
 
         public string Nombre
         {
@@ -73,8 +79,9 @@ namespace UI.Models.ViewModels
 
         public GameViewModel()
         {
+
             //obtenemos la conexion con el servidor
-            connection=new HubConnectionBuilder().WithUrl(enlace).Build();
+            connection = new HubConnectionBuilder().WithUrl(enlace).Build();
 
             UnirseCommand = new Command(async () => await UnirseAlJuego());
             ElegirOpcionCommand = new Command<string>(async (opcion) => await ElegirOpcion(opcion));

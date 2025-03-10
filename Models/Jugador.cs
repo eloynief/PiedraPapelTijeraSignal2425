@@ -3,6 +3,7 @@
     public class Jugador
     {
 
+        #region atributos
         private string nombre;
 
         private string grupo;
@@ -12,8 +13,9 @@
         private int victorias;
 
         private Eleccion eleccion;
+        #endregion
 
-
+        #region properties
         public string Nombre { 
             get{ return nombre; } 
             set{ nombre = value; }
@@ -44,8 +46,9 @@
             get { return eleccion; }
             set { eleccion = value; }
         }
+        #endregion
 
-
+        #region constructors
 
         /// <summary>
         /// constructor sin params
@@ -65,6 +68,21 @@
         /// <param name="nombre"></param>
         /// <param name="grupo"></param>
         /// <param name="puntos"></param>
+        public Jugador(string nombre, string grupo)
+        {
+            this.nombre = nombre;
+            this.grupo = grupo;
+            this.puntos = 0;
+            this.victorias = 0;
+            this.eleccion = new Eleccion("");
+        }
+
+        /// <summary>
+        /// constructor con params
+        /// </summary>
+        /// <param name="nombre"></param>
+        /// <param name="grupo"></param>
+        /// <param name="puntos"></param>
         public Jugador(string nombre,string grupo, int puntos,int victorias)
         {
             this.nombre = nombre;
@@ -73,6 +91,8 @@
             this.victorias = victorias;
             this.eleccion = new Eleccion("");
         }
+
+        #endregion
 
     }
 }
